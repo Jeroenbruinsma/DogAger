@@ -1,23 +1,36 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, {useState} from 'react';
 import './App.css';
+import Dog from './components/Dog';
 
 function App() {
+
+  const listOfDogs = [
+      {name: "Zeytin", age: 12  },
+      {name: "Libby", age: 14  }
+  ]
+
+  const [dogList, setDoglist] = useState(listOfDogs);
+
+
+  const dogGetsOlder = (name) => {
+    console.log("dogGetsOlder", name)
+    const newDogList = dogList.map(dog => {
+      if(name === dog.name){
+        dog.age = dog.age + 1;
+      }
+      return dog
+    })
+    console.log("new doglist", newDogList)
+    setDoglist(newDogList)
+    
+  }
+  console.log("what is my dogList", dogList)
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        {dogList.map(dogInfo => {
+          return <Dog name={dogInfo.name} age={dogInfo.age}  dogGetsOlder={dogGetsOlder}/>
+        })  }
       </header>
     </div>
   );
